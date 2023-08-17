@@ -33,7 +33,7 @@ namespace Student.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -54,6 +54,9 @@ namespace Student.Api
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
             });
+
+            // Ensure the database and create tables
+            dbContext.Database.EnsureCreated();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
